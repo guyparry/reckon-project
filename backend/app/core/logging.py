@@ -42,7 +42,7 @@ def setup_logging() -> None:
     )
     
     # Setup GCP logging if in cloud environment
-    if settings.ENVIRONMENT in ["staging", "production"]:
+    if settings.ENVIRONMENT == "production":
         try:
             client = cloud_logging.Client()
             client.setup_logging()

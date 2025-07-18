@@ -74,13 +74,12 @@ validate_project() {
 
 # Function to deploy environment
 deploy_environment() {
-    local environment=$1
-    local project_id=$2
+    local project_id=$1
     
-    print_status "Deploying $environment environment for project: $project_id"
+    print_status "Deploying production environment for project: $project_id"
     
     # Navigate to environment directory
-    cd "environments/$environment"
+    cd "environments/production"
     
     # Initialize Terraform
     print_status "Initializing Terraform..."
@@ -109,7 +108,7 @@ deploy_environment() {
         
         # Show cost estimate
         echo
-        print_warning "Estimated monthly cost for $environment: $20-40"
+        print_warning "Estimated monthly cost for production: $20-40"
         print_status "With $300 GCP credits, this should last 6-12 months!"
         
     else
@@ -120,13 +119,12 @@ deploy_environment() {
 
 # Function to show usage
 show_usage() {
-    echo "Usage: $0 [staging|production] [project-id]"
+    echo "Usage: $0 [project-id]"
     echo
     echo "Examples:"
-    echo "  $0 staging my-staging-project"
-    echo "  $0 production my-production-project"
+    echo "  $0 my-production-project"
     echo
-    echo "This script will deploy the Reckon infrastructure for the specified environment."
+    echo "This script will deploy the Reckon infrastructure for production."
     echo "Make sure to update the terraform.tfvars file with your specific configuration."
 }
 
@@ -137,21 +135,13 @@ main() {
     echo
     
     # Check if correct number of arguments
-    if [[ $# -ne 2 ]]; then
+    if [[ $# -ne 1 ]]; then
         print_error "Invalid number of arguments"
         show_usage
         exit 1
     fi
     
-    local environment=$1
-    local project_id=$2
-    
-    # Validate environment
-    if [[ "$environment" != "staging" && "$environment" != "production" ]]; then
-        print_error "Environment must be 'staging' or 'production'"
-        show_usage
-        exit 1
-    fi
+    local project_id=$1
     
     # Check prerequisites
     check_prerequisites
@@ -160,7 +150,7 @@ main() {
     validate_project "$project_id"
     
     # Deploy environment
-    deploy_environment "$environment" "$project_id"
+    deploy_environment "$project_id"
     
     print_success "Deployment script completed!"
 }

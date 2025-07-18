@@ -10,13 +10,13 @@ variable "region" {
 }
 
 variable "environment" {
-  description = "Environment (staging or production)"
+  description = "Environment (production only)"
   type        = string
-  default     = "staging"
+  default     = "production"
   
   validation {
-    condition     = contains(["staging", "production"], var.environment)
-    error_message = "Environment must be either 'staging' or 'production'."
+    condition     = contains(["production"], var.environment)
+    error_message = "Environment must be 'production'."
   }
 }
 

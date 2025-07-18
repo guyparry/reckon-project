@@ -13,13 +13,6 @@ This Terraform configuration creates a cost-optimized GCP infrastructure for the
 
 ## 📊 Estimated Monthly Costs
 
-### Staging Environment
-- **Cloud Run**: $5-10/month (mostly free tier)
-- **Cloud SQL**: $8-12/month
-- **Secret Manager**: $2/month
-- **VPC Connector**: $5-10/month
-- **Total**: ~$20-35/month
-
 ### Production Environment
 - **Cloud Run**: $10-20/month
 - **Cloud SQL**: $8-12/month
@@ -27,7 +20,7 @@ This Terraform configuration creates a cost-optimized GCP infrastructure for the
 - **VPC Connector**: $5-10/month
 - **Total**: ~$25-45/month
 
-**With $300 GCP credits**: Should last 6-12 months for both environments!
+**With $300 GCP credits**: Should last 6-12 months!
 
 ## 🚀 Quick Start
 
@@ -45,22 +38,13 @@ This Terraform configuration creates a cost-optimized GCP infrastructure for the
    gcloud auth application-default login
    ```
 
-2. **Update project IDs** in environment files:
+2. **Update project ID** in environment file:
    ```bash
-   # Edit these files:
-   environments/staging/terraform.tfvars
+   # Edit this file:
    environments/production/terraform.tfvars
    ```
 
-3. **Deploy Staging Environment**:
-   ```bash
-   cd environments/staging
-   terraform init
-   terraform plan
-   terraform apply
-   ```
-
-4. **Deploy Production Environment**:
+3. **Deploy Production Environment**:
    ```bash
    cd environments/production
    terraform init
@@ -82,7 +66,6 @@ infrastructure/terraform/
 │   ├── cloud_run/         # Cloud Run services
 │   └── service_account/   # IAM and permissions
 └── environments/          # Environment-specific configs
-    ├── staging/
     └── production/
 ```
 
@@ -90,15 +73,15 @@ infrastructure/terraform/
 
 ### Database Settings
 - **Instance Type**: `db-f1-micro` (smallest available)
-- **Disk Size**: 10GB (staging) / 20GB (production)
-- **Backup Retention**: 3 days (staging) / 7 days (production)
+- **Disk Size**: 20GB (production)
+- **Backup Retention**: 7 days (production)
 - **High Availability**: Disabled for cost savings
 
 ### Cloud Run Settings
 - **CPU**: 1 shared CPU
-- **Memory**: 256Mi (staging) / 512Mi (production)
-- **Min Instances**: 0 (staging) / 1 (production)
-- **Max Instances**: 2 (staging) / 5 (production)
+- **Memory**: 512Mi (production)
+- **Min Instances**: 1 (production)
+- **Max Instances**: 5 (production)
 
 ### Networking
 - **VPC**: Private network for security

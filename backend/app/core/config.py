@@ -87,12 +87,7 @@ class DevelopmentSettings(Settings):
     ALLOWED_HOSTS: List[str] = ["http://localhost:3000", "http://127.0.0.1:3000"]
 
 
-class StagingSettings(Settings):
-    """Staging environment settings."""
-    
-    ENVIRONMENT: str = "staging"
-    DEBUG: bool = False
-    LOG_LEVEL: str = "INFO"
+
 
 
 class ProductionSettings(Settings):
@@ -110,8 +105,6 @@ def get_settings() -> Settings:
     
     if environment == "production":
         return ProductionSettings()
-    elif environment == "staging":
-        return StagingSettings()
     else:
         return DevelopmentSettings()
 

@@ -20,6 +20,7 @@ A modern FastAPI + React application with GCP integration, featuring cloud-nativ
 - Docker
 - Google Cloud CLI
 - Terraform
+- jq (for account management scripts)
 
 ### Local Development
 
@@ -51,7 +52,16 @@ A modern FastAPI + React application with GCP integration, featuring cloud-nativ
    alembic upgrade head
    ```
 
-5. **Run development servers**:
+5. **Configure Google accounts** (if using multiple accounts):
+   ```bash
+   # Update account configuration
+   ./scripts/update-google-config.sh
+   
+   # Switch to personal account for this project
+   ./scripts/setup-google-account.sh personal
+   ```
+
+6. **Run development servers**:
    ```bash
    # Backend (from backend directory)
    uvicorn app.main:app --reload --port 8000
@@ -93,6 +103,7 @@ reckon-project/
 │   ├── terraform/          # Terraform configurations
 │   └── gcp/                # GCP-specific configurations
 ├── scripts/                # Utility scripts
+├── config/                 # Configuration files
 ├── .github/                # GitHub configurations
 │   ├── workflows/          # CI/CD workflows
 │   └── hooks/              # Pre-commit hooks
@@ -144,12 +155,28 @@ npm run lint
 npm run type-check
 ```
 
-## 🚀 Deployment
+## 🔐 Account Management
 
-### Staging
+### Multiple Google Accounts
+This project includes scripts to manage multiple Google accounts for different workspaces:
+
 ```bash
-git push origin main  # Triggers staging deployment
+# Update account configuration
+./scripts/update-google-config.sh
+
+# Switch to specific account
+./scripts/setup-google-account.sh personal  # For personal projects
+./scripts/setup-google-account.sh work      # For work projects
+./scripts/setup-google-account.sh auto      # Auto-detect based on workspace
 ```
+
+### Configuration
+Account settings are stored in `config/google-accounts.json`:
+- **Personal account**: Used for reckon-project and other personal projects
+- **Work account**: Used for work-related projects
+- **Auto-detection**: Automatically switches based on workspace name
+
+## 🚀 Deployment
 
 ### Production
 ```bash
